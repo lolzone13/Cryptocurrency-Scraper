@@ -1,2 +1,2 @@
 # Cryptocurrency-Scraper
-An API to fetch cryptocurrency prices.
+A Flask API to fetch cryptocurrency prices.
