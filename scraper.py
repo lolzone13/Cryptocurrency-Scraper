@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests 
 import pandas as pd
+import sqlite3 as sql
 
 url = 'https://goldprice.org/cryptocurrency-price'
 
@@ -11,11 +12,6 @@ headers = {
 req = requests.get(url, headers=headers)
 
 
-# bypassing 403 https://www.youtube.com/watch?v=6RfyXcf_vQo
-# soup = BeautifulSoup(req.content, "html.parser")
-# dfs = pd.read_html(req.text)
-# print(dfs[0]) 
-# df = dfs[0]
 
 soup = BeautifulSoup(req.text, 'html.parser')
 table_elements = []
@@ -44,11 +40,14 @@ for i in l2:
     final_data+=[temp]
 
 
-table_headers = ["Rank", "CryptoCurrency", "Market Cap.", "Price", "Circulating Supply", "Volume(24h)", "Change(24h)"]
+table_headers = ["Rank", "CryptoCurrency", "Market Cap", "Price", "Circulating Supply", "Volume(24h)", "Change(24h)"]
+
+print(final_data)
+# df = pd.DataFrame(final_data, columns=table_headers)
+# print(df.head)
 
 
-df = pd.DataFrame(final_data, columns=table_headers)
-
-print(df.head)
+# conn = sql.connect('cryptodata.db')
+# df.to_sql('weather', conn)
 
 
