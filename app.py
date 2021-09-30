@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 # table_headers = ["Rank", "CryptoCurrency", "Market Cap", "Price", "Circulating Supply", "Volume(24h)", "Change(24h)"]
 
 class CryptoData(db.Model):
-    rank = db.Column(db.Integer, primary_key=True)
+    rank = db.Column(db.String, primary_key=True)
     cryptocurrency = db.Column(db.String(120), nullable=False)
     # marketcap = db.Column(db.String(120), nullable=False)
     price = db.Column(db.String(120), nullable=False)
@@ -24,6 +24,7 @@ class CryptoData(db.Model):
         return "{self.name} - {self.price}"
 
 def load_data():
+
 # 0,1,3
     l = [['1', 'Bitcoin', '$783,527,705,812', '$41,614.00', '18,829,687', '$29,321,365,978', '0.83 %'], ['2', 'Ethereum', '$336,086,400,383', '$2,853.60', '117,724,940', '$17,574,566,168', '1.05 %'], ['3', 'Tether', '$69,574,640,137', '$1.00', '69,339,570,575', '$58,346,464,870', '0.31 %'], 
     ['4', 'Cardano', '$65,987,546,273', '$2.06', '32,066,390,668', '$2,556,351,667', '0.18 %'], ['5', 'Binance Coin', '$56,878,978,266', '$368.05', '154,533,652', '$2,100,588,350', '10.51 %'], ['6', 'XRP', '$43,814,903,423', '$0.94', '46,750,439,262', '$4,126,603,106', '3.15 %'], ['8', 'USD Coin', '$31,596,514,994', '$1.00', '31,518,258,702', '$3,592,505,153', '0.14 %'], ['9', 'Polkadot', '$28,372,016,203', '$27.49', '1,035,373,202', '$1,151,006,988', '3.42 %'], ['10', 'Dogecoin', '$26,302,491,830', '$0.20', '131,487,708,520', '$790,259,404', '1.04 %'], ['12', 'Terra', '$13,777,643,200', '$34.47', '399,686,079', '$1,109,840,482', '1.66 %'], ['13', 'Binance USD', '$13,432,106,067', '$1.00', '13,456,370,138', '$3,838,330,349', '0.24 %'], ['15', 'Chainlink', '$10,488,539,788', '$23.04', '455,009,554', '$944,828,778', '2.87 %'], ['16', 'Litecoin', 
@@ -45,12 +46,9 @@ def get_all_data():
 
     output = []
     for row in data:
-        output.append({"Rank": CryptoData.rank, 
-        "CryptoCurrency": CryptoData.cryptocurrency,
-        "Price": CryptoData.price
+        output.append({"Rank": row.rank, 
+        "CryptoCurrency": row.cryptocurrency,
+        "Price": row.price
         })
-    print(output)
+    
     return {"CryptoData": output}
-
-
-
