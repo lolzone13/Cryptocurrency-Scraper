@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import json
+
 
 app = Flask(__name__)
 
@@ -24,6 +24,12 @@ class CryptoData(db.Model):
         return "{self.name} - {self.price}"
 
 def load_data():
+    data = CryptoData.query.all()
+    
+    for row in data:
+        db.session.delete(row)
+        db.session.commit()
+    
 
 # 0,1,3
     l = [['1', 'Bitcoin', '$783,527,705,812', '$41,614.00', '18,829,687', '$29,321,365,978', '0.83 %'], ['2', 'Ethereum', '$336,086,400,383', '$2,853.60', '117,724,940', '$17,574,566,168', '1.05 %'], ['3', 'Tether', '$69,574,640,137', '$1.00', '69,339,570,575', '$58,346,464,870', '0.31 %'], 
@@ -33,16 +39,27 @@ def load_data():
 
     for i in range(len(l)):
         row = l[i]
-        curr = CryptoData(rank = i+1, cryptocurrency = row[1], price = row[3])
+        curr = CryptoData(rank = i+1, cryptocurrency = row[1].lower(), price = row[3])
         db.session.add(curr)
         db.session.commit()
 
 
 
+@app.route('/')
+def home_page():
+    st = '''
+    Welcome to the Cryptocurrency API\n\n\n\n
+    To find the data, go to http://127.0.0.1:5000/api/all
+
+    '''
+    return st
+
+
 @app.route('/api/all')
 def get_all_data():
-    #load_data()
+    load_data()
     data = CryptoData.query.all()
+
 
     output = []
     for row in data:
@@ -52,3 +69,10 @@ def get_all_data():
         })
     
     return {"CryptoData": output}
+
+
+@app.route('/api/<string:cryptocurrency>')
+def get_crypto_data(cryptocurrency):
+    crypt = CryptoData.query.get_or_404(cryptocurrency)
+    print("\n\n\n\n",crypt,"\n\n\n\n")
+    return jsonify({"Rank": crypt.rank, "CryptoCurrency": crypt.cryptocurrency, "Price": crypt.price})
