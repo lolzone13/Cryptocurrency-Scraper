@@ -48,8 +48,10 @@ def load_data():
 @app.route('/')
 def home_page():
     st = '''
+    <h1>
     Welcome to the Cryptocurrency API\n\n\n\n
     To find the data, go to http://127.0.0.1:5000/api/all
+    </h1>
 
     '''
     return st
@@ -73,6 +75,7 @@ def get_all_data():
 
 @app.route('/api/<string:cryptocurrency>')
 def get_crypto_data(cryptocurrency):
-    crypt = CryptoData.query.get_or_404(cryptocurrency)
+    
+    crypt = CryptoData.query.filter_by(cryptocurrency=cryptocurrency.lower()).first()
     print("\n\n\n\n",crypt,"\n\n\n\n")
     return jsonify({"Rank": crypt.rank, "CryptoCurrency": crypt.cryptocurrency, "Price": crypt.price})
