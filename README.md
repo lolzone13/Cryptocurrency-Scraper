@@ -11,7 +11,7 @@ Built with flask for the api and BeautifulSoup4 for webscraping.
 
 * Grabs the data regarding the top 100 most popular cryptocurrency.
 
-    <ip>/api/<crypto-name>
+    ```<ip>/api/<crypto-name>```
 
 * Grabs the data regarding a specific cryptocurrency.
 
