@@ -7,13 +7,13 @@ Built with flask for the api and BeautifulSoup4 for webscraping.
 ---
 ### Features:-
 
-    `<ip>/api/all` 
+    <ip>/api/all 
 
-..*Grabs the data regarding the top 100 most popular cryptocurrency.
+..* Grabs the data regarding the top 100 most popular cryptocurrency.
 
     `<ip>/api/<crypto-name>`
 
-..*Grabs the data regarding a specific cryptocurrency
+..* Grabs the data regarding a specific cryptocurrency.
 
 
 ---
