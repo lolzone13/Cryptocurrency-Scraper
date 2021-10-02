@@ -5,14 +5,15 @@ A Flask API to fetch data on various popular cryptocurrency.
 Built with flask for the api and BeautifulSoup4 for webscraping.
 
 ---
+
 ### Features:-
-
+```
     <ip>/api/all 
-
+```
 * Grabs the data regarding the top 100 most popular cryptocurrency.
-
-    <code><ip>/api/<crypto-name><code>
-
+```
+    <ip>/api/<crypto-name>
+```
 * Grabs the data regarding a specific cryptocurrency.
 
 
