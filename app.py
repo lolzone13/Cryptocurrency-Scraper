@@ -96,4 +96,4 @@ def get_crypto_data(cryptocurrency):
 
 if __name__ == "__main__":
     # app.run(debug=True)
-    serve(app, host='0.0.0.0', port=5000, url_scheme='https')
+    serve(app, host='0.0.0.0')
