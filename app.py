@@ -1,7 +1,7 @@
 from scraper import crypto_scraper
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cryptodata.db'
 db = SQLAlchemy(app)
 
+# creating a database with the following column names
 # table_headers = ["Rank", "CryptoCurrency", "Market Cap", "Price", "Circulating Supply", "Volume(24h)", "Change(24h)"]
 
 class CryptoData(db.Model):
@@ -26,16 +27,17 @@ class CryptoData(db.Model):
         return "{self.name} - {self.price}"
 
 def load_data():
-    data = CryptoData.query.all()
-    
+
+    # deleting all previously stored data
+    data = CryptoData.query.all()    
     for row in data:
         db.session.delete(row)
         db.session.commit()
     
-
-
+    # grabbing scraped data from scraper.py
     final_data = crypto_scraper()
 
+    # adding data row by row to the database (cryptodata.db)
     for i in range(len(final_data)):
         row = final_data[i]
         curr = CryptoData(index = i+1, rank = row[0],cryptocurrency = row[1].lower(), marketcap=row[2],
@@ -50,7 +52,7 @@ def home_page():
     st = '''
     <h1>
     Welcome to the Cryptocurrency API<br><br>
-    To find the data, go to <a href="http://127.0.0.1:5000/api/all">http://127.0.0.1:5000/api/all</a>
+    To find the data, go here <a href="http://127.0.0.1:5000/api/all">http://127.0.0.1:5000/api/all</a>
     </h1>
 
     '''
@@ -93,5 +95,5 @@ def get_crypto_data(cryptocurrency):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    #serve(app)
+    # app.run(debug=True)
+    serve(app, host='0.0.0.0', port=5000, url_scheme='https')
