@@ -1,4 +1,4 @@
-# Cryptocurrency-Scraper <img src="https://media1.giphy.com/media/l49JMVDvP8D38LHwI/giphy.gif">
+# Cryptocurrency-Scraper <br><img src="https://media1.giphy.com/media/l49JMVDvP8D38LHwI/giphy.gif" width="300" height="300"><br>
 ---
 
 A Flask API to fetch data on various popular cryptocurrency.
